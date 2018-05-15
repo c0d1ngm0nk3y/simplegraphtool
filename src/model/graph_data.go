@@ -12,8 +12,14 @@ type graphData struct {
 	nodes map[string]bool
 }
 
+//GraphData is the interface to use
+type GraphData interface {
+	Add(edge Edge)
+	GetNodes() []string
+}
+
 //NewGraphData should be used to create graphdata
-func NewGraphData() *graphData {
+func NewGraphData() GraphData {
 	g := new(graphData)
 	g.nodes = make(map[string]bool)
 	return g
