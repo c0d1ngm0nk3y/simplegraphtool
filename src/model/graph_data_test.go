@@ -38,3 +38,12 @@ func TestAddTwoEdgesWithCommonSource(t *testing.T) {
 	assert.Len(t, nodes, 3)
 	assert.Contains(t, nodes, "C")
 }
+
+func TestGraphAsStringInDotFormatNodes(t *testing.T) {
+	g := NewGraphData()
+	g.Add(Edge{"Node A", "Node B", 1})
+	g.Add(Edge{"Node A", "Node C", 3})
+
+	assert.Contains(t, g.String(), "Node A;")
+	assert.Contains(t, g.String(), "Node C;")
+}

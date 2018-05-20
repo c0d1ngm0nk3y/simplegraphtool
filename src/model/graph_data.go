@@ -1,5 +1,9 @@
 package model
 
+import (
+	"github.com/awalterschulze/gographviz"
+)
+
 //Edge points from source to destination
 type Edge struct {
 	source      string
@@ -16,6 +20,7 @@ type graphData struct {
 type GraphData interface {
 	Add(edge Edge)
 	GetNodes() []string
+	String() string
 }
 
 //NewGraphData should be used to create graphdata
@@ -42,4 +47,15 @@ func (graph graphData) GetNodes() []string {
 	}
 
 	return keys
+}
+
+//String puts out this graph as dot format
+func (graph graphData) String() string {
+	dotGraph := gographviz.NewGraph()
+	for _, node := range graph.GetNodes() {
+		dotGraph.AddNode("G", node, nil)
+	}
+	//dotGraph.AddEdge("a", "b", true, nil)
+	output := dotGraph.String()
+	return output
 }
