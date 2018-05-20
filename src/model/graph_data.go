@@ -14,12 +14,14 @@ type Edge struct {
 //GraphData representing a graph
 type graphData struct {
 	nodes map[string]bool
+	edges []Edge
 }
 
 //GraphData is the interface to use
 type GraphData interface {
 	Add(edge Edge)
 	GetNodes() []string
+	GetEdges() []Edge
 	String() string
 }
 
@@ -34,6 +36,7 @@ func NewGraphData() GraphData {
 func (graph *graphData) Add(edge Edge) {
 	graph.nodes[edge.source] = true
 	graph.nodes[edge.destination] = true
+	graph.edges = append(graph.edges, edge)
 }
 
 //GetNodes of this graph
@@ -49,13 +52,21 @@ func (graph graphData) GetNodes() []string {
 	return keys
 }
 
+//GetEdges of this graph
+func (graph graphData) GetEdges() []Edge {
+	return graph.edges
+}
+
 //String puts out this graph as dot format
 func (graph graphData) String() string {
 	dotGraph := gographviz.NewGraph()
 	for _, node := range graph.GetNodes() {
 		dotGraph.AddNode("G", node, nil)
 	}
-	//dotGraph.AddEdge("a", "b", true, nil)
+
+	for _, edge := range graph.GetEdges() {
+		dotGraph.AddEdge(edge.source, edge.destination, true, nil)
+	}
 	output := dotGraph.String()
 	return output
 }

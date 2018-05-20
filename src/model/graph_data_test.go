@@ -29,6 +29,18 @@ func TestAddOneEdge(t *testing.T) {
 	assert.Contains(t, nodes, "B")
 }
 
+func TestAddOneEdgeGetEdges(t *testing.T) {
+	g := NewGraphData()
+	g.Add(Edge{"A", "B", 1})
+
+	edges := g.GetEdges()
+	assert.Len(t, edges, 1)
+
+	edge := edges[0]
+	assert.Equal(t, edge.source, "A")
+	assert.Contains(t, edge.destination, "B")
+}
+
 func TestAddTwoEdgesWithCommonSource(t *testing.T) {
 	g := NewGraphData()
 	g.Add(Edge{"A", "B", 1})
@@ -46,4 +58,12 @@ func TestGraphAsStringInDotFormatNodes(t *testing.T) {
 
 	assert.Contains(t, g.String(), "Node A;")
 	assert.Contains(t, g.String(), "Node C;")
+}
+
+func TestGraphAsStringInDotFormatEdges(t *testing.T) {
+	g := NewGraphData()
+	g.Add(Edge{"Node A", "Node B", 1})
+	g.Add(Edge{"Node A", "Node C", 3})
+
+	assert.Contains(t, g.String(), "Node A->Node C;")
 }
