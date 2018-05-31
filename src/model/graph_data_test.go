@@ -67,3 +67,24 @@ func TestGraphAsStringInDotFormatEdges(t *testing.T) {
 
 	assert.Contains(t, g.String(), "Node A->Node C;")
 }
+
+func TestParseEdgeWithEmptyString(t *testing.T) {
+	success, _ := ParseEdge("")
+
+	assert.False(t, success)
+}
+
+func TestParseEdgeWithSomeString(t *testing.T) {
+	success, _ := ParseEdge("soomom")
+
+	assert.False(t, success)
+}
+
+func TestParseEdgeWithMinimal(t *testing.T) {
+	success, e := ParseEdge("A,B,1")
+
+	assert.True(t, success)
+	assert.Equal(t, "A", e.source)
+	assert.Equal(t, "B", e.destination)
+	assert.Equal(t, 1, e.weight)
+}
