@@ -80,6 +80,12 @@ func TestParseEdgeWithSomeString(t *testing.T) {
 	assert.False(t, success)
 }
 
+func TestParseEdgeWithError(t *testing.T) {
+	success, _ := ParseEdge("A,B,x")
+
+	assert.False(t, success)
+}
+
 func TestParseEdgeWithMinimal(t *testing.T) {
 	success, e := ParseEdge("A,B,1")
 
