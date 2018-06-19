@@ -42,10 +42,11 @@ func ParseEdge(s string) (bool, Edge) {
 
 	if len(tokens) == 3 {
 		weight, error := strconv.Atoi(tokens[2])
-		if error == nil {
-			e = Edge{tokens[0], tokens[1], weight}
-			return true, e
+		if error != nil {
+			weight = -1
 		}
+		e = Edge{tokens[0], tokens[1], weight}
+		return true, e
 	}
 
 	return false, e
@@ -79,6 +80,8 @@ func (graph graphData) GetEdges() []Edge {
 //String puts out this graph as dot format
 func (graph graphData) String() string {
 	dotGraph := gographviz.NewGraph()
+	dotGraph.SetName("Graph")
+	dotGraph.Directed = true
 	for _, node := range graph.GetNodes() {
 		dotGraph.AddNode("G", node, nil)
 	}
