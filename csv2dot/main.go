@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"model"
 	"strings"
+
+	"github.com/c0d1ngm0nk3y/simplegraphtool/model"
 )
 
 func main() {
